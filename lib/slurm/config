@@ -1,0 +1,2 @@
+slurm_getnodes="GetNodes"
+slurm_nodes="nodes"
