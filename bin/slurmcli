@@ -39,13 +39,15 @@ done
 
 ### main
 cat << EOF > "${rc}"
-source $(dirname ${BASH_SOURCE})/../lib/header
+source $(dirname ${BASH_SOURCE})/../../lib/header
 export PS1="SLURMCLI [\h] (\$?)> "
 EOF
 if ${_v} ; then
   echo "gdbg=true" >> "${rc}"
 fi
 cat << EOF >> "${rc}"
+source $(dirname ${BASH_SOURCE})/../../shf3/lib/header
+include ${HOME}/shf3.slurm/lib
 import gui
 import slurm/cli
 
