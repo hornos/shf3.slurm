@@ -3,20 +3,6 @@ gbn=$(basename ${BASH_SOURCE})
 gdn=$(dirname ${BASH_SOURCE})
 rc="${gdn}/.${gbn}rc"
 
-function help/slurmcli() {
-  cat << EOF
-
-Slurm Command Line Interface
-
-Interface Commands:
-  help        - show help
-  sinfo       - queue info
-  drain nodes - drain nodes
-  down nodes  - down nodes
-  up nodes    - up nodes
-EOF
-  exit 1
-}
 
 function slurmcli/stop() {
   if test -r "${rc}" ; then
@@ -48,6 +34,19 @@ source $(dirname ${BASH_SOURCE})/../../shf3/lib/header
 include ${HOME}/shf3.slurm/lib
 import gui
 import slurm/cli
+
+function help/slurmcli() {
+  cat << HELP
+Slurm Command Line Interface
+
+Interface Commands:
+  help        - show help
+  sinfo       - queue info
+  drain nodes - drain nodes
+  down nodes  - down nodes
+  up nodes    - up nodes
+HELP
+}
 
 function drain() {
   slurm/cli/drain \$*
