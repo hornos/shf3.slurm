@@ -72,7 +72,7 @@ function slurm/cli/up() {
   local i
   for i in ${_hosts} ; do
     echo -n "Up node: ${i} "
-    slurm/cli/update "${i}" up "${_r}"
+    slurm/cli/update "${i}" idle "${_r}"
     if failed $? ; then
       echo "FAILED"
     else
