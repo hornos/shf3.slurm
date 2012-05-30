@@ -51,8 +51,22 @@ include ${HOME}/shf3.slurm/lib
 import gui
 import slurm/cli
 
+function drain() {
+  slurm/cli/drain $*
+}
+
+function down() {
+  slurm/cli/down $*
+}
+
+function up() {
+  slurm/cli/up $*
+}
+
 msg "SLURM CLI"
 gui/line
+
+
 EOF
 
 bash --noprofile --rcfile "${rc}"
