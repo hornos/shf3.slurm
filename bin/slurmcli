@@ -1,0 +1,56 @@
+#!/bin/bash
+gbn=$(basename ${BASH_SOURCE})
+gdn=$(dirname ${BASH_SOURCE})
+rc="${gdn}/.${gbn}rc"
+
+function help/slurmcli() {
+  cat << EOF
+
+Slurm Command Line Interface
+
+Usage: ${gbn} options
+              -v - verbose
+
+Interface Commands:
+  help        - show help
+  drain nodes - drain nodes
+  down nodes  - down nodes
+  up nodes    - up nodes
+EOF
+  exit 1
+}
+
+function slurmcli/stop() {
+  if test -r "${rc}" ; then
+    rm -f "${rc}"
+  fi
+  exit 1
+}
+trap slurmcli/stop INT TERM EXIT
+
+### args
+_v=false
+while getopts hv: o; do
+  case "$o" in
+    v) _v=true;;
+    h|*) help/slurmcli;;
+  esac
+done
+
+### main
+cat << EOF > "${rc}"
+source $(dirname ${BASH_SOURCE})/../lib/header
+export PS1="SLURMCLI [\h] (\$?)> "
+EOF
+if ${_v} ; then
+  echo "gdbg=true" >> "${rc}"
+fi
+cat << EOF >> "${rc}"
+import gui
+import slurm/cli
+
+msg "SLURM CLI"
+gui/line
+EOF
+
+bash --noprofile --rcfile "${rc}"

@@ -1,0 +1,81 @@
+
+function slurm/cli/update() {
+  local _n=$1
+  shift
+  local _s=$1
+  shift
+  local _r=$1
+  if empty "${_n}" || empty "${_s}" ; then
+    $failure
+  fi
+
+  local _q="update NodeName=${_n} State=${_s}"
+  if ! empty "${_r}" ; then
+    _q="${_q} Reason=${_r}"
+  fi
+}
+
+function slurm/cli/drain() {
+  if empty "$*" ; then $failure ; fi
+
+  local _hosts=$(${slurm_cli_scontrol} show hostname $*)
+  local _r=""
+
+  read -p "Reason for drain (no spaces): " _r
+  answer "Drain nodes: ${_hosts}?"
+  if failed $? ; then $failure ; fi
+
+  local i
+  for i in ${_hosts} ; do
+    echo -n "Drain node: ${i} "
+    slurm/cli/update "${i}" drain "${_r}"
+    if failed $? ; then
+      echo "FAILED"
+    else
+      echo "OK"
+    fi
+  done
+}
+
+function slurm/cli/down() {
+  if empty "$*" ; then $failure ; fi
+
+  local _hosts=$(${slurm_cli_scontrol} show hostname $*)
+  local _r=""
+
+  read -p "Reason for down (no spaces): " _r
+  answer "Down nodes: ${_hosts}?"
+  if failed $? ; then $failure ; fi
+
+  local i
+  for i in ${_hosts} ; do
+    echo -n "Down node: ${i} "
+    slurm/cli/update "${i}" down "${_r}"
+    if failed $? ; then
+      echo "FAILED"
+    else
+      echo "OK"
+    fi
+  done
+}
+
+function slurm/cli/up() {
+  if empty "$*" ; then $failure ; fi
+
+  local _hosts=$(${slurm_cli_scontrol} show hostname $*)
+  local _r=""
+
+  answer "Up nodes: ${_hosts}?"
+  if failed $? ; then $failure ; fi
+
+  local i
+  for i in ${_hosts} ; do
+    echo -n "Up node: ${i} "
+    slurm/cli/update "${i}" up "${_r}"
+    if failed $? ; then
+      echo "FAILED"
+    else
+      echo "OK"
+    fi
+  done
+}
