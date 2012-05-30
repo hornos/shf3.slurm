@@ -39,7 +39,7 @@ done
 
 ### main
 cat << EOF > "${rc}"
-source $(dirname ${BASH_SOURCE})/../../lib/header
+source $(dirname ${BASH_SOURCE})/../../shf3/lib/header
 export PS1="SLURMCLI [\h] (\$?)> "
 EOF
 if ${_v} ; then
