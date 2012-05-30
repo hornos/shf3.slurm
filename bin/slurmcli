@@ -8,11 +8,9 @@ function help/slurmcli() {
 
 Slurm Command Line Interface
 
-Usage: ${gbn} options
-              -v - verbose
-
 Interface Commands:
   help        - show help
+  sinfo       - queue info
   drain nodes - drain nodes
   down nodes  - down nodes
   up nodes    - up nodes
@@ -61,6 +59,10 @@ function down() {
 
 function up() {
   slurm/cli/up \$*
+}
+
+function help() {
+  help/slurmcli
 }
 
 msg "SLURM CLI"
