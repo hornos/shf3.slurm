@@ -52,15 +52,15 @@ import gui
 import slurm/cli
 
 function drain() {
-  slurm/cli/drain $*
+  slurm/cli/drain \$*
 }
 
 function down() {
-  slurm/cli/down $*
+  slurm/cli/down \$*
 }
 
 function up() {
-  slurm/cli/up $*
+  slurm/cli/up \$*
 }
 
 msg "SLURM CLI"
