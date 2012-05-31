@@ -1,0 +1,15 @@
+#!/bin/bash
+source $(dirname ${BASH_SOURCE})/../../shf3/lib/header
+include ${HOME}/shf3.slurm/lib
+import slurm
+
+nds="${slurm_nodes}"
+if test -r "${nds}" ; then
+  rm -fv "${nds}"
+fi
+${slurm_getnodes} "${nds}"
+if failed $? ; then
+  exit 1
+fi
+psshmgr cmd "${nds}" nscd -i group
+psshmgr cmd "${nds}" nscd -i passwd
