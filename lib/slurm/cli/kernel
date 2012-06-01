@@ -91,13 +91,17 @@ function slurm/cli/log() {
   local _n=$1
   local _log=""
   local _m=""
+
   case "${_n}" in
     slurm)
       _log="/var/log/messages"
       _m="${_n}"
+    ;;
     *)
       _log="${slurm_cli_logdir}/${_n}"
+    ;;
   esac
+
   if empty "${_m}" ; then
     tail -f "${_log}"
   else
