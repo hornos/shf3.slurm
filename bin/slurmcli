@@ -61,7 +61,7 @@ function up() {
 }
 
 function log() {
-  slurm/cli/up \$*
+  slurm/cli/log \$*
 }
 
 function help() {
