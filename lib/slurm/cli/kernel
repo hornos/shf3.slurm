@@ -48,6 +48,10 @@ function slurm/cli/down() {
   answer "Down nodes: ${_hosts}?"
   if failed $? ; then $failure ; fi
 
+  local _t=${slurm_cli_down_timeout}
+  echo "Waiting ${_t} s (Press Ctrl-C to abort)"
+  sleep ${_t}
+
   local i
   for i in ${_hosts} ; do
     echo -n "Down node: ${i} "
@@ -79,4 +83,24 @@ function slurm/cli/up() {
       echo "OK"
     fi
   done
+}
+
+function slurm/cli/log() {
+  if empty "$*" ; then $failure ; fi
+
+  local _n=$1
+  local _log=""
+  local _m=""
+  case "${_n}" in
+    slurm)
+      _log="/var/log/messages"
+      _m="${_n}"
+    *)
+      _log="${slurm_cli_logdir}/${_n}"
+  esac
+  if empty "${_m}" ; then
+    tail -f "${_log}"
+  else
+    tail -f "${_log}" | grep ${_m}
+  fi
 }

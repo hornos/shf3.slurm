@@ -60,6 +60,10 @@ function up() {
   slurm/cli/up \$*
 }
 
+function log() {
+  slurm/cli/up \$*
+}
+
 function help() {
   help/slurmcli
 }

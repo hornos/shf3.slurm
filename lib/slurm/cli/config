@@ -1,1 +1,3 @@
 slurm_cli_scontrol="scontrol"
+slurm_cli_down_timeout=5
+slurm_cli_logdir="/var/log/cluster"
