@@ -92,7 +92,7 @@ function slurm/cli/log() {
   local _log=""
   local _m=""
 
-  answer "Show log for ${_hosts}?"
+  answer "Show log for ${_n}?"
   if failed $? ; then $failure ; fi
 
   case "${_n}" in
