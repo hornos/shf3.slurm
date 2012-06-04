@@ -111,3 +111,19 @@ function slurm/cli/log() {
     tail -f "${_log}" | grep ${_m}
   fi
 }
+
+function slurm/cli/cmd() {
+  local _n=$1
+  shift
+  if empty "${_n}" ; then
+    msg "Node not found"
+    $failure
+  fi
+
+  local _t=$(${slurm_cli_nodeattr} ${_n})
+  if ! test "${_t}" = "compute" ; then
+    echo "Not compute node: ${_n}"
+    $failure
+  fi
+  ${slurm_cli_ssh} ${_n} $*
+}

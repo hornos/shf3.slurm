@@ -64,6 +64,10 @@ function log() {
   slurm/cli/log \$*
 }
 
+function cmd() {
+  slurm/cli/cmd \$*
+}
+
 function help() {
   help/slurmcli
 }

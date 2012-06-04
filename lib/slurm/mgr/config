@@ -1,0 +1,8 @@
+slurm_mgr="sacctmgr"
+
+# associations
+# Account, Cluster, DefaultQOS, Fairshare, GrpCPUMins, GrpCPUs, GrpJobs, GrpNodes,
+# GrpSubmitJob, GrpWall, ID, LFT, MaxCPUMins, MaxCPUs, MaxJobs, MaxNodes, MaxSubmitJobs,
+# MaxWall, QOS, ParentID, ParentName,
+                                                                                                                                            Partition, RawQOS, RGT, Use
+slurm_mgr_assoc="Account,User,Fairshare,GrpJobs,GrpNodes"

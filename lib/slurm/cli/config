@@ -1,3 +1,5 @@
 slurm_cli_scontrol="scontrol"
 slurm_cli_down_timeout=5
 slurm_cli_logdir="/var/log/cluster"
+slurm_cli_nodeattr="eszrnode -l"
+slurm_cli_ssh="ssh"

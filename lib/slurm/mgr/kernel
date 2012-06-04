@@ -1,0 +1,12 @@
+
+function slurm/mgr/assoc() {
+  ${slurm_mgr} list associations ${slurm_mgr_assoc} tree withd
+}
+
+function slurm/mgr/users() {
+  ${slurm_mgr} list user WithAssoc
+}
+
+function slurm/mgr/accounts() {
+  ${slurm_mgr} list accounts WithAssoc
+}
