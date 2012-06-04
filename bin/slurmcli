@@ -75,6 +75,10 @@ function term() {
   slurm/cli/term \$*
 }
 
+function stat() {
+  slurm/cli/stat \$*
+}
+
 function help() {
   help/slurmcli
 }
