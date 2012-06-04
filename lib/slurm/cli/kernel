@@ -127,3 +127,28 @@ function slurm/cli/cmd() {
   fi
   ${slurm_cli_ssh} ${_n} $*
 }
+
+function slurm/cli/term() {
+  local _n=$1
+  shift
+  slurm/cli/cmd ${_n} -t $*
+}
+
+function slurm/cli/exit() {
+  if test -r "${slurm_cli_tmp}" ; then
+    rm -f "${slurm_cli_tmp}"
+  fi
+  exit $?
+}
+
+function slurm/cli/stat() {
+  local _n=$1
+  if empty "$_n" ; then
+    $failure
+  fi
+  slurm_cli_tmp="${slurm_cli_tmp}/${gbn}.$$"
+  # trap slurm/cli/exit INT TERM EXIT
+  ${slurm_cli_scontrol} show hostnames > "${slurm_cli_tmp}"
+  ${slurm_cli_pmstat} -H "${slurm_cli_tmp}"
+  rm -f "${slurm_cli_tmp}"
+}

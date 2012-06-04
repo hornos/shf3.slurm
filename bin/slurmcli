@@ -45,6 +45,9 @@ Interface Commands:
   drain nodes - drain nodes
   down nodes  - down nodes
   up nodes    - up nodes
+  log node    - check node log
+  cmd node commands  - run commands on node
+  term node commnads - run commands with terminal on node
 HELP
 }
 
@@ -66,6 +69,10 @@ function log() {
 
 function cmd() {
   slurm/cli/cmd \$*
+}
+
+function term() {
+  slurm/cli/term \$*
 }
 
 function help() {
