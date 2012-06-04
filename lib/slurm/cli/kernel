@@ -143,12 +143,12 @@ function slurm/cli/exit() {
 
 function slurm/cli/stat() {
   local _n=$1
-  if empty "$_n" ; then
+  if empty "${_n}" ; then
     $failure
   fi
   slurm_cli_tmp="${slurm_cli_tmp}/${gbn}.$$"
   # trap slurm/cli/exit INT TERM EXIT
-  ${slurm_cli_scontrol} show hostnames > "${slurm_cli_tmp}"
+  ${slurm_cli_scontrol} show hostnames "${_n}" > "${slurm_cli_tmp}"
   ${slurm_cli_pmstat} -H "${slurm_cli_tmp}"
   rm -f "${slurm_cli_tmp}"
 }
