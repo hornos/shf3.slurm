@@ -1,0 +1,62 @@
+function slurm/sgi/cwpower() {
+  ${slurm_sgi_cwpower} $* 2>/dev/null
+}
+
+function slurm/sgi/ison() {
+  local _n=$1
+  if empty "${_n}" ; then $failure ; fi
+
+  local _on=$(slurm/sgi/cwpower -f "${_n}" | awk '/On/{print}')
+  if empty "${_on}" ; then
+    $failure
+  fi
+  $success
+}
+
+function slurm/sgi/flash() {
+  local _n=$1
+  if empty "${_n}" ; then $failure ; fi
+  
+  slurm/sgi/cwpower -f "${_n}"
+}
+
+
+function slurm/sgi/unflash() {
+  local _n=$1
+  if empty "${_n}" ; then $failure ; fi
+  
+  slurm/sgi/cwpower -u "${_n}"
+}
+
+
+function slurm/sgi/off() {
+  local _n=$1
+  if empty "${_n}" ; then $failure ; fi
+
+  if ! slurm/sgi/ison "${_n}" ; then
+    msg "Node ${_n} is OFF"
+    $success
+  fi
+  answer "Do you want to POWER OFF node ${_n}?"
+  if failed $? ; $failure ; fi
+
+  msg "(Press Ctrl+C to abort operation)"
+  sleep 3
+  slurm/sgi/cwpower -0 "${_n}"
+}
+
+
+function slurm/sgi/on() {
+  local _n=$1
+  if empty "${_n}" ; then $failure ; fi
+
+  if slurm/sgi/ison "${_n}" ; then
+    msg "Node ${_n} is ON"
+    $success
+  fi
+
+  answer "Do you want to power on node ${_n}?"
+  if failed $? ; $failure ; fi
+
+  slurm/sgi/cwpower -0 "${_n}"
+}

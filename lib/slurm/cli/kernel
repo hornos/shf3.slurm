@@ -38,7 +38,10 @@ function slurm/cli/drain() {
   done
 }
 
+
 function slurm/cli/down() {
+  import slurm/sgi
+
   if empty "$*" ; then $failure ; fi
 
   local _hosts=$(${slurm_cli_scontrol} show hostname $*)
@@ -60,11 +63,17 @@ function slurm/cli/down() {
       echo "FAILED"
     else
       echo "OK"
+      answer "Flash node identification led?"
+      if succeed $? ; then
+        slurm/sgi/flash "${i}"
+      fi
     fi
   done
 }
 
 function slurm/cli/up() {
+  import slurm/sgi
+
   if empty "$*" ; then $failure ; fi
 
   local _hosts=$(${slurm_cli_scontrol} show hostname $*)
@@ -81,6 +90,7 @@ function slurm/cli/up() {
       echo "FAILED"
     else
       echo "OK"
+      slurm/sgi/unflash "${i}"
     fi
   done
 }
@@ -128,11 +138,13 @@ function slurm/cli/cmd() {
   ${slurm_cli_ssh} ${_n} $*
 }
 
+
 function slurm/cli/term() {
   local _n=$1
   shift
   slurm/cli/cmd ${_n} -t $*
 }
+
 
 function slurm/cli/exit() {
   if test -r "${slurm_cli_tmp}" ; then
