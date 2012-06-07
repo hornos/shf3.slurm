@@ -164,3 +164,27 @@ function slurm/cli/stat() {
   ${slurm_cli_pmstat} -H "${_tmp}"
   rm -f "${_tmp}"
 }
+
+function slurm/cli/select() {
+  local _f=$*
+  local _m="IDLE|ALLOCATED"
+  local _v=""
+  if empty "${_f}" ; then $failure ; fi
+
+  case "${_f}" in
+    idle)
+      _m="IDLE"
+      ;;
+    alloc)
+      _m="ALLOCATED"
+      ;;
+    down)
+      _v="-v"
+      ;;
+  esac
+
+  ${slurm_cli_scontrol} -o show node | \
+  egrep ${_v} "${_m}" | \
+  if ! test "${_f}" = "down" ; then grep ${_f}; fi | \
+  awk '{split($1,a,"="); print a[2];}'
+}

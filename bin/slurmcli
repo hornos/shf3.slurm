@@ -79,6 +79,10 @@ function stat() {
   slurm/cli/stat \$*
 }
 
+function select() {
+  slurm/cli/select \$*
+}
+
 function help() {
   help/slurmcli
 }

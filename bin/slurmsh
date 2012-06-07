@@ -1,0 +1,16 @@
+#!/bin/bash
+header=$(dirname ${BASH_SOURCE})/../../shf3/lib/header
+source ${header}
+error/stop
+
+### main
+cat << EOF > "${grc}"
+source ${header}
+export PS1="${gbn} [\h] (\$?)\\$ "
+include ${HOME}/shf3.slurm/lib
+import gui
+import slurm/sh
+msg "Slurm Cluster Manager"
+gui/line
+EOF
+${gsh}
