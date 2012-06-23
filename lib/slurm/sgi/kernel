@@ -38,7 +38,7 @@ function slurm/sgi/off() {
     $success
   fi
   answer "Do you want to POWER OFF node ${_n}?"
-  if failed $? ; $failure ; fi
+  if failed $? ; then $failure ; fi
 
   msg "(Press Ctrl+C to abort operation)"
   sleep 3
