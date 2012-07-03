@@ -62,5 +62,5 @@ function slurm/sgi/on() {
   answer "Do you want to power on node ${_n}?"
   if failed $? ; then $failure ; fi
 
-  slurm/sgi/cwpower -0 "${_n}"
+  slurm/sgi/cwpower -1 "${_n}"
 }
