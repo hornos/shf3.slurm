@@ -16,16 +16,20 @@ function slurm/sgi/ison() {
 function slurm/sgi/flash() {
   local _n=$1
   if empty "${_n}" ; then $failure ; fi
-  
-  slurm/sgi/cwpower -f "${_n}"
+
+  if ${slurm_sgi_flash} ; then
+    slurm/sgi/cwpower -f "${_n}"
+  fi
 }
 
 
 function slurm/sgi/unflash() {
   local _n=$1
   if empty "${_n}" ; then $failure ; fi
-  
-  slurm/sgi/cwpower -u "${_n}"
+
+  if ${slurm_sgi_flash} ; then
+    slurm/sgi/cwpower -u "${_n}"
+  fi
 }
 
 

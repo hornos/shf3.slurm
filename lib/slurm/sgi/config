@@ -1,1 +1,2 @@
 slurm_sgi_cwpower="cwpower"
+slurm_sgi_flash=false
